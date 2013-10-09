@@ -37,3 +37,9 @@ signup/views         36      9    75%
 -------------------------------------
 TOTAL               277     28    90%
 ```
+
+To check for PEP-8 compliance:
+
+```bash
+➫ find . | grep .py$ | grep -v '._' | xargs pep8
+```
