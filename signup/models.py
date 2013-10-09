@@ -6,7 +6,6 @@ from django.db.models import Model, CharField, DateTimeField, \
 from django.utils import timezone
 import pytz
 import re
-import string
 
 
 def good_subdomain(value):
@@ -16,7 +15,7 @@ def good_subdomain(value):
     if count:
         raise ValidationError('Sub-domain is taken')
 
-    if value != re.sub(r'[^a-zA-Z0-9\-]+', '', value, re.UNICODE):
+    if value != re.sub(r'[^a-z0-9\-]+', '', value, re.UNICODE):
         raise ValidationError('Contains unsupported characters')
 
     if len(value) > 75:
@@ -29,7 +28,8 @@ def good_subdomain(value):
 class Signup(Model):
     first_name = CharField(max_length=200)
     last_name = CharField(max_length=200)
-    email_address = CharField(max_length=200, validators=[validate_email])
+    email_address = CharField(max_length=200, validators=[validate_email],\
+        help_text='This is the email address of the user')
     password = CharField(max_length=1024)
     sub_domain = CharField(max_length=75, validators=[good_subdomain])
     signup_time = DateTimeField('Time of Signup')

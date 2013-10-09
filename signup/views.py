@@ -54,7 +54,7 @@ def questions(request, signup_id):
 
     return render(request, 'signup/questions.html', {
         'form': form,
-        'signup_id': signup_id
+        'signup_id': signup_id,
     })
 
 
