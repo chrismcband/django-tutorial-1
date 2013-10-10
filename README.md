@@ -1,3 +1,9 @@
+# Installation
+
+`mysite/settings.py` is missing from this project. Please create your own.
+
+# Testing
+
 To run tests and find out the coverage run the following:
 
 ```bash
@@ -37,6 +43,8 @@ signup/views         36      9    75%
 -------------------------------------
 TOTAL               277     28    90%
 ```
+
+# Code quality
 
 To check for PEP-8 compliance:
 
