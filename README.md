@@ -51,3 +51,25 @@ To check for PEP-8 compliance:
 ```bash
 ➫ find . | grep .py$ | grep -v '._' | xargs pep8
 ```
+
+# Tasks
+
+```bash
+➫ python manage.py celeryd \
+--concurrency=2 --autoscale=3,2 \
+--verbosity=3 --loglevel=INFO \
+--queues=signup_service_call \
+-n signup_service_call
+```
+
+Example usage:
+
+```python
+from signup.tasks import SignupServiceCall
+from signup.models import Signup
+
+signup = Signup.objects.all()[0]
+task = SignupServiceCall()
+for i in range(0, 1000):
+    task.delay(signup)
+```
