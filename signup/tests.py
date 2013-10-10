@@ -2,6 +2,7 @@ import datetime
 from django.utils import timezone
 from django.test import TestCase
 from signup.models import Signup, Survey
+from signup.tasks import SignupServiceCall
 from django.core.urlresolvers import reverse
 
 
@@ -28,3 +29,13 @@ class SignupViewTests(TestCase):
         })
         self.assertEqual(resp.status_code, 302)
         self.assertTrue('/signup/questions/1' in resp['Location'])
+
+
+class TaskTests(TestCase):
+    fixtures = ['test_signup']
+
+    def test_service_call(self):
+        signup = Signup.objects.all()[0]
+        task = SignupServiceCall()
+        res = task.run(signup)
+        self.assertTrue(res, 'Task failed to finish properly')

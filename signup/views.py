@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views import generic
 from signup.models import Signup, Survey
+from signup.tasks import SignupServiceCall
 
 
 class SignupForm(ModelForm):
@@ -23,6 +24,8 @@ def form(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             signup = form.save()
+            task = SignupServiceCall()
+            task.delay(signup)
             return HttpResponseRedirect(
                 reverse('signup:questions', args=(signup.id,)))
     else:
